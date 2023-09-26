@@ -48,9 +48,51 @@ class Figure1(Figure): # l block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+
+class Figure2(Figure): #j block
+    def __init__(self):
+        self.gridList = [[120,0], [120,40], [160,40], [200, 40]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
+
+class Figure3(Figure): #L block
+    def __init__(self):
+        self.gridList = [[200,0], [200,40], [160,40], [120, 40]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
+
+class Figure4(Figure): #o block
+    def __init__(self):
+        self.gridList = [[200,0], [200,40], [160,40], [160, 0]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
+
+class Figure5(Figure): #s block
+    def __init__(self):
+        self.gridList = [[160,0], [160,40], [120,40], [200, 0]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
+
+class Figure6(Figure): #t block
+    def __init__(self):
+        self.gridList = [[160,0], [160,40], [120,40], [200, 40]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
+
+class Figure7(Figure): #z block
+    def __init__(self):
+        self.gridList = [[160,0], [160,40], [120,0], [200, 40]]
+        self.isActive = True
+        self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
+        self.color = random.choice(self.color_list)
       
 
-fig = Figure1()
+fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
 others_list = []
 
 
@@ -64,7 +106,7 @@ while True:
     if(fig.isActive==False):
         others_list.append(fig)
         fig = None
-        fig = Figure1()
+        fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
 
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
