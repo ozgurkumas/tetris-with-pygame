@@ -59,6 +59,8 @@ class Figure1(Figure): # l block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 1
 
 class Figure2(Figure): #j block
     def __init__(self):
@@ -67,6 +69,8 @@ class Figure2(Figure): #j block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 2
 
 class Figure3(Figure): #L block
     def __init__(self):
@@ -75,6 +79,8 @@ class Figure3(Figure): #L block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 3
 
 class Figure4(Figure): #o block
     def __init__(self):
@@ -83,6 +89,8 @@ class Figure4(Figure): #o block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 4
 
 class Figure5(Figure): #s block
     def __init__(self):
@@ -91,6 +99,8 @@ class Figure5(Figure): #s block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 5
 
 class Figure6(Figure): #t block
     def __init__(self):
@@ -99,6 +109,8 @@ class Figure6(Figure): #t block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 6
 
 class Figure7(Figure): #z block
     def __init__(self):
@@ -107,6 +119,8 @@ class Figure7(Figure): #z block
         self.isActive = True
         self.color_list = [(0, 0, 255), (204, 96, 86), (208, 230, 101), (176, 26, 166), (40, 155, 184)]
         self.color = random.choice(self.color_list)
+    def getId(self):
+        return 7
 
 
 def rotPerm(main_obj, others): #permission for rotating
@@ -200,29 +214,44 @@ while True:
                         if maxList(0, fig.gridList) < screen_width-grid_scale and perm(fig, others_list, 1)==True:
                             for i in range(len(fig.gridList)):
                                 fig.gridList[i][0] += grid_scale
-                            fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
+                            if fig.getId() == 2 or fig.getId() == 3:
+                                fig.rootPos = [fig.gridList[2][0], fig.gridList[2][1]]
+                            else:
+                                fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
                     elif event.key == pygame.K_LEFT:
                         if minList(0, fig.gridList) > 0 and perm(fig, others_list, 2)==True:
                             for i in range(len(fig.gridList)):
                                 fig.gridList[i][0] -= grid_scale
-                            fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
+                            if fig.getId() == 2 or fig.getId() == 3:
+                                fig.rootPos = [fig.gridList[2][0], fig.gridList[2][1]]
+                            else:
+                                fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
                     elif event.key == pygame.K_DOWN:
                         if perm(fig, others_list, 0)==True:
                             if maxList(1, fig.gridList) < screen_height-grid_scale:
                                 for i in range(len(fig.gridList)):
                                     fig.gridList[i][1] += grid_scale
-                                fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
+                                if fig.getId() == 2 or fig.getId() == 3:
+                                    fig.rootPos = [fig.gridList[2][0], fig.gridList[2][1]]
+                                else:
+                                    fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
                             else:
                                 fig.isActive = False
                     elif event.key == pygame.K_SPACE:
-                        if rotPerm(fig, others_list):
-                            fig.rotate()
+                        if fig.getId()==4:
+                            pass
+                        else:
+                            if rotPerm(fig, others_list):
+                                fig.rotate()
           
     if fig.isActive == True and perm(fig, others_list, 0)==True: # down 0, right 1, left 2
             if maxList(1, fig.gridList) < screen_height-grid_scale:
                 for i in range(len(fig.gridList)):
                     fig.gridList[i][1] += grid_scale
-                fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
+                if fig.getId() == 2 or fig.getId() == 3:
+                    fig.rootPos = [fig.gridList[2][0], fig.gridList[2][1]]
+                else:
+                    fig.rootPos = [fig.gridList[1][0], fig.gridList[1][1]]
             else:
                 fig.isActive = False
 
