@@ -200,9 +200,15 @@ while True:
             pygame.draw.rect(screen, white, (j * grid_scale, i * grid_scale, grid_scale, grid_scale),1)
 
     if(fig.isActive==False):
-        others_list.append(fig)
-        fig = None
-        fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
+        if(minList(1, fig.gridList)<=40):
+            print("You lost!")
+            others_list = []
+            fig = None
+            fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
+        else:
+            others_list.append(fig)
+            fig = None
+            fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
 
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
