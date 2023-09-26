@@ -92,6 +92,37 @@ class Figure7(Figure): #z block
         self.color = random.choice(self.color_list)
       
 
+def perm(main_obj, others, dir):
+    positions = []
+    permission_bool = True
+    if len(others)>0:
+        if dir==0: #down
+            for pos in main_obj.gridList:
+                positions.append([pos[0], pos[1]+grid_scale])
+            for pos in positions:
+                for object_ in others:
+                    if pos in object_.gridList[:]:
+                        permission_bool = False
+                        main_obj.isActive = False
+                        break
+        elif dir==1: #right
+            for pos in main_obj.gridList:
+                positions.append([pos[0]+grid_scale, pos[1]])
+            for pos in positions:
+                for object_ in others:
+                    if pos in object_.gridList:
+                        permission_bool = False
+                        break
+        elif dir==2: #left
+            for pos in main_obj.gridList:
+                positions.append([pos[0]-grid_scale, pos[1]])
+            for pos in positions:
+                for object_ in others:
+                    if pos in object_.gridList:
+                        permission_bool = False
+                        break
+    return permission_bool
+
 fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
 others_list = []
 
@@ -115,21 +146,22 @@ while True:
             if fig.isActive==True:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RIGHT:
-                        if maxList(0, fig.gridList) < screen_width-grid_scale:
+                        if maxList(0, fig.gridList) < screen_width-grid_scale and perm(fig, others_list, 1)==True:
                             for i in range(len(fig.gridList)):
                                 fig.gridList[i][0] += grid_scale
                     elif event.key == pygame.K_LEFT:
-                        if minList(0, fig.gridList) > 0:
+                        if minList(0, fig.gridList) > 0 and perm(fig, others_list, 2)==True:
                             for i in range(len(fig.gridList)):
                                 fig.gridList[i][0] -= grid_scale
                     elif event.key == pygame.K_DOWN:
-                        if maxList(1, fig.gridList) < screen_height-grid_scale:
-                            for i in range(len(fig.gridList)):
-                                fig.gridList[i][1] += grid_scale
-                        else:
-                            fig.isActive = False
+                        if perm(fig, others_list, 0)==True:
+                            if maxList(1, fig.gridList) < screen_height-grid_scale:
+                                for i in range(len(fig.gridList)):
+                                    fig.gridList[i][1] += grid_scale
+                            else:
+                                fig.isActive = False
           
-    if fig.isActive == True:
+    if fig.isActive == True and perm(fig, others_list, 0)==True: # down 0, right 1, left 2
             if maxList(1, fig.gridList) < screen_height-grid_scale:
                 for i in range(len(fig.gridList)):
                     fig.gridList[i][1] += grid_scale
