@@ -188,7 +188,32 @@ def perm(main_obj, others, dir):
                         break
     return permission_bool
 
+def display_text(screen_, text):
+    pygame.draw.rect(screen, black, (0, 0, 3*grid_scale, grid_scale))
+    pygame.draw.rect(screen, white, (0, 0, 3*grid_scale, grid_scale),1)
+    font = pygame.font.Font(None, 28)
+    text = font.render(text, True, (255,0,0))
+    textRect = text.get_rect()
+    textRect.center = (60, 20)
+    screen_.blit(text, textRect)
+
+nextFig = ""
 fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
+rndIndex = random.randint(0, 6)
+if rndIndex==0:
+    nextFig = "next: l block"
+elif rndIndex==1:
+    nextFig = "next: j block"
+elif rndIndex==2:
+    nextFig = "next: L block"
+elif rndIndex==3:
+    nextFig = "next: o block"
+elif rndIndex==4:
+    nextFig = "next: s block"
+elif rndIndex==5:
+    nextFig = "next: t block"
+elif rndIndex==6:
+    nextFig = "next: z block"
 others_list = []
 
 
@@ -204,11 +229,27 @@ while True:
             print("You lost!")
             others_list = []
             fig = None
-            fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
+            fig = [Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()][rndIndex]
+            rndIndex = random.randint(0, 6)
         else:
             others_list.append(fig)
             fig = None
-            fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
+            fig = [Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()][rndIndex]
+            rndIndex = random.randint(0, 6)
+        if rndIndex==0:
+            nextFig = "next: l block"
+        elif rndIndex==1:
+            nextFig = "next: j block"
+        elif rndIndex==2:
+            nextFig = "next: L block"
+        elif rndIndex==3:
+            nextFig = "next: o block"
+        elif rndIndex==4:
+            nextFig = "next: s block"
+        elif rndIndex==5:
+            nextFig = "next: t block"
+        elif rndIndex==6:
+            nextFig = "next: z block"
 
         locationList = []
         for i in range(int(screen_height/grid_scale)):
@@ -238,6 +279,8 @@ while True:
                     for j in range(len(object_.gridList)):
                         if(object_.gridList[j][1]<coordY):
                             object_.gridList[j][1] += grid_scale
+
+    display_text(screen, nextFig)
 
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
