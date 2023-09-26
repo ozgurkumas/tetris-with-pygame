@@ -210,6 +210,35 @@ while True:
             fig = None
             fig = random.choice([Figure1(), Figure2(), Figure3(), Figure4(), Figure5(), Figure6(), Figure7()])
 
+        locationList = []
+        for i in range(int(screen_height/grid_scale)):
+            rowList = []
+            for j in range(int(screen_width/grid_scale)):
+                posX = j*grid_scale
+                posY = i*grid_scale
+                for object_ in others_list:
+                    if [posX, posY] in object_.gridList:
+                        rowList.append([object_, [posX, posY]])
+                        break
+            locationList.append(rowList)
+        
+        for i in range(len(locationList)):
+            uniqueList = []
+            if len(locationList[i])==10:
+                for j in range(10):
+                    locationList[i][j][0].gridList.remove(locationList[i][j][1])
+                coordY = locationList[i][0][1][1]
+                locationList.pop(i)
+                locationList.insert(0, [])
+                for index in range(0,i+1):
+                    for j in range(len(locationList[index])):
+                        if locationList[index][j][0] not in uniqueList:
+                            uniqueList.append(locationList[index][j][0])
+                for object_ in uniqueList:
+                    for j in range(len(object_.gridList)):
+                        if(object_.gridList[j][1]<coordY):
+                            object_.gridList[j][1] += grid_scale
+
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
